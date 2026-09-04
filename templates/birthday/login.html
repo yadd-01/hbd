@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk ke Hati 💕</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+        }
+
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FF6B9D, #C44DFF, #FF6B9D, #FFE5F0);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 0;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            animation: floatUp linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .login-container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .lock-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: #FFFFFF;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+        }
+
+        .login-subtitle {
+            font-size: 1.1rem;
+            color: #FFE5F0;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 400px;
+            max-width: 90vw;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards 0.7s;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            color: #FFE5F0;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1.1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-group input:focus {
+            border-color: #FFD700;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .input-icon {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #FF6B9D, #C44DFF);
+            color: white;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .error-message {
+            background: rgba(255, 107, 157, 0.3);
+            border: 1px solid rgba(255, 107, 157, 0.5);
+            color: #FFE5F0;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        .hint-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        .hint-text span {
+            color: #FFD700;
+        }
+
+        .love-decor {
+            position: fixed;
+            font-size: 4rem;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .love-decor.top-left {
+            top: 10%;
+            left: 10%;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .love-decor.top-right {
+            top: 15%;
+            right: 10%;
+            animation: float 4s ease-in-out infinite 1s;
+        }
+
+        .love-decor.bottom-left {
+            bottom: 15%;
+            left: 15%;
+            animation: float 4s ease-in-out infinite 2s;
+        }
+
+        .love-decor.bottom-right {
+            bottom: 10%;
+            right: 15%;
+            animation: float 4s ease-in-out infinite 0.5s;
+        }
+
+        @media (max-width: 480px) {
+            .login-title {
+                font-size: 2.2rem;
+            }
+            .login-box {
+                padding: 30px 25px;
+            }
+            .lock-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    
+    <div class="stars" id="stars"></div>
+    
+    <div class="hearts-bg" id="hearts-bg"></div>
+
+    <div class="love-decor top-left">💕</div>
+    <div class="love-decor top-right">💖</div>
+    <div class="love-decor bottom-left">💗</div>
+    <div class="love-decor bottom-right">💝</div>
+
+    <div class="login-container">
+        <div class="lock-icon">🔐</div>
+        
+        <h1 class="login-title">Buka Hadiah Spesial</h1>
+        <p class="login-subtitle">Masukkan nama dan password untuk membuka kejutan untuk Lisa</p>
+        
+        <div class="login-box">
+            <div class="error-message" id="error-msg"></div>
+            
+            <form id="login-form">
+                <div class="input-group">
+                    <label><span class="input-icon">💕</span> Namaku Sayang</label>
+                    <input type="text" id="name-input" placeholder=" Ketik namamu di sini..." autocomplete="off" required>
+                </div>
+                
+                <div class="input-group">
+                    <label><span class="input-icon">🔑</span> Password Spesial</label>
+                    <input type="password" id="password-input" placeholder=" Tanggal spesial kita..." autocomplete="off" required>
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    ✨ Buka Cintaku ✨
+                </button>
+            </form>
+            
+            <p class="hint-text">💡 Hint: <span>tanggal spesial kita</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Create Stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 80; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Create Floating Hearts
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts-bg');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 10000);
+            }, 600);
+        }
+
+        // Login Form
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name-input').value;
+            const password = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+            const btn = document.querySelector('.login-btn');
+            
+            // Button loading state
+            btn.textContent = '⏳ Membuka...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ name, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    btn.textContent = '✨ Berhasil! ✨';
+                    btn.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                    
+                    // Create celebration
+                    createCelebration();
+                    
+                    setTimeout(() => {
+                        window.location.href = '/welcome/';
+                    }, 1500);
+                } else {
+                    errorMsg.textContent = data.message;
+                    errorMsg.style.display = 'block';
+                    errorMsg.style.animation = 'none';
+                    setTimeout(() => errorMsg.style.animation = 'shake 0.5s ease', 10);
+                    
+                    btn.textContent = '✨ Buka Cintaku ✨';
+                    btn.disabled = false;
+                    
+                    // Clear password
+                    document.getElementById('password-input').value = '';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'Terjadi kesalahan, coba lagi ya sayang 💕';
+                errorMsg.style.display = 'block';
+                btn.textContent = '✨ Buka Cintaku ✨';
+                btn.disabled = false;
+            }
+        });
+
+        // Get CSRF Token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Celebration Effect
+        function createCelebration() {
+            const colors = ['#FF6B9D', '#C44DFF', '#FFD700', '#FFE5F0', '#FFFFFF'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'fixed';
+                    confetti.style.width = Math.random() * 10 + 5 + 'px';
+                    confetti.style.height = Math.random() * 10 + 5 + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = '50%';
+                    confetti.style.top = '50%';
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.pointerEvents = 'none';
+                    confetti.style.zIndex = '1000';
+                    confetti.style.transition = 'all 1s ease-out';
+                    
+                    document.body.appendChild(confetti);
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = Math.random() * 300 + 100;
+                    
+                    setTimeout(() => {
+                        confetti.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) rotate(${Math.random() * 360}deg)`;
+                        confetti.style.opacity = '0';
+                    }, 50);
+                    
+                    setTimeout(() => confetti.remove(), 1100);
+                }, i * 20);
+            }
+        }
+
+        // Initialize
+        createStars();
+        createHearts();
+
+        // Enter key support
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('login-form').dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

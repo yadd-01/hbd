@@ -6,18 +6,32 @@ def login(request):
     error = None
     
     if request.method == 'POST':
-        name = request.POST.get('name', '').lower().strip()
-        password = request.POST.get('password', '').lower().strip()
+        name = request.POST.get('name', '').strip()
+        password = request.POST.get('password', '').strip().lower()
         
-        # Password: 04 september
-        valid_password = password in ['04 september', '04september', '4 september', '4september', '04-09', '0409']
+        # Password: 04 september - semua variasi
+        valid_passwords = [
+            '04 september',
+            '04september',
+            '4 september', 
+            '4september',
+            '04/09',
+            '04-09',
+            '0409',
+            '4/9',
+            '4-9',
+            'september 04',
+            'september 4',
+            'september04',
+            'september4',
+        ]
         
-        if valid_password:
+        if password in valid_passwords:
             request.session['authenticated'] = True
             request.session['name'] = name
             return redirect('birthday:landing')
         else:
-            error = 'Password salah! Coba lagi ya sayang 💕'
+            error = f'Password salah! Coba lagi ya sayang 💕'
     
     return render(request, 'birthday/login.html', {'error': error})
 

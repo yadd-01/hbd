@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-h54128@e3a6-6!%0vkn9mtf3e7kz0c#2050wzs3d7eeu=!as6*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['habedeee.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -124,3 +124,6 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CSRF
+CSRF_TRUSTED_ORIGINS = ['https://habedeee.pythonanywhere.com']

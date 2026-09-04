@@ -1,23 +1,31 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
 import json
 
+@ensure_csrf_cookie
 def login(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        name = data.get('name', '').lower().strip()
-        password = data.get('password', '').lower().strip()
-        
-        # Password: 04 september (tanggal ultah & jadian)
-        valid_password = password in ['04 september', '04september', '4 september', '4september', '04-09', '0409']
-        
-        if valid_password:
-            request.session['authenticated'] = True
-            request.session['name'] = name
-            return JsonResponse({'status': 'success', 'message': 'Selamat datang!'})
-        else:
-            return JsonResponse({'status': 'error', 'message': 'Password salah! Coba lagi ya sayang 💕'})
+        try:
+            data = json.loads(request.body)
+            name = data.get('name', '').lower().strip()
+            password = data.get('password', '').lower().strip()
+            
+            # Password: 04 september (tanggal ultah & jadian)
+            valid_password = password in ['04 september', '04september', '4 september', '4september', '04-09', '0409']
+            
+            if valid_password:
+                request.session['authenticated'] = True
+                request.session['name'] = name
+                return JsonResponse({'status': 'success', 'message': 'Selamat datang!'})
+            else:
+                return JsonResponse({'status': 'error', 'message': 'Password salah! Coba lagi ya sayang 💕'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': 'Terjadi kesalahan'})
     
+    # Ensure CSRF token is set
+    get_token(request)
     return render(request, 'birthday/login.html')
 
 def landing(request):

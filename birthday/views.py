@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
+import logging
+
+logger = logging.getLogger(__name__)
 
 @ensure_csrf_cookie
 def login(request):
@@ -8,6 +11,8 @@ def login(request):
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         password = request.POST.get('password', '').strip().lower()
+        
+        logger.info(f"Login attempt: name={name}, password={password}")
         
         # Password: 04 september - semua variasi
         valid_passwords = [
@@ -20,18 +25,16 @@ def login(request):
             '0409',
             '4/9',
             '4-9',
-            'september 04',
-            'september 4',
-            'september04',
-            'september4',
         ]
         
         if password in valid_passwords:
+            logger.info("Login success")
             request.session['authenticated'] = True
             request.session['name'] = name
             return redirect('birthday:landing')
         else:
-            error = f'Password salah! Coba lagi ya sayang 💕'
+            logger.info(f"Login failed: password={password}")
+            error = 'Password salah! Coba lagi ya sayang 💕'
     
     return render(request, 'birthday/login.html', {'error': error})
 

@@ -1,32 +1,25 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
-import json
 
 @ensure_csrf_cookie
 def login(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            name = data.get('name', '').lower().strip()
-            password = data.get('password', '').lower().strip()
-            
-            # Password: 04 september (tanggal ultah & jadian)
-            valid_password = password in ['04 september', '04september', '4 september', '4september', '04-09', '0409']
-            
-            if valid_password:
-                request.session['authenticated'] = True
-                request.session['name'] = name
-                return JsonResponse({'status': 'success', 'message': 'Selamat datang!'})
-            else:
-                return JsonResponse({'status': 'error', 'message': 'Password salah! Coba lagi ya sayang 💕'})
-        except Exception as e:
-            return JsonResponse({'status': 'error', 'message': 'Terjadi kesalahan'})
+    error = None
     
-    # Ensure CSRF token is set
-    get_token(request)
-    return render(request, 'birthday/login.html')
+    if request.method == 'POST':
+        name = request.POST.get('name', '').lower().strip()
+        password = request.POST.get('password', '').lower().strip()
+        
+        # Password: 04 september
+        valid_password = password in ['04 september', '04september', '4 september', '4september', '04-09', '0409']
+        
+        if valid_password:
+            request.session['authenticated'] = True
+            request.session['name'] = name
+            return redirect('birthday:landing')
+        else:
+            error = 'Password salah! Coba lagi ya sayang 💕'
+    
+    return render(request, 'birthday/login.html', {'error': error})
 
 def landing(request):
     if not request.session.get('authenticated'):
@@ -38,7 +31,6 @@ def main(request):
         return redirect('birthday:login')
     
     name = request.session.get('name', 'Sayangku')
-    # Capitalize each word
     display_name = ' '.join(word.capitalize() for word in name.split())
     
     return render(request, 'birthday/main.html', {'name': display_name})
